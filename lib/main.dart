@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nss_tracker/views/home_view.dart';
+import 'package:nss_tracker/views/login_view.dart';
 
 void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarColor: Colors.white));
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark));
   runApp(MyApp());
 }
 
@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'NSS Tracker',
       theme: ThemeData(
-        splashColor: Colors.grey[100],
-        primarySwatch: Colors.blue,
+        splashColor: Colors.green[50],
+        primarySwatch: Colors.green,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
@@ -50,25 +50,8 @@ class MyApp extends StatelessWidget {
         // .apply(displayColor: Colors.white, bodyColor: Colors.white),
       ),
       themeMode: ThemeMode.light,
-      home: Scaffold(
-        // appBar: AppBar(),
-        body: SafeArea(child: HomeView()),
-        bottomNavigationBar: BottomNavigationBar(
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 20.0,
-          items: [
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Placeholder"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Placeholder"),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings), label: "Placeholder"),
-            // BottomNavigationBarItem(
-            // icon: Icon(Icons.settings), label: "Placeholder"),
-          ],
-        ),
-      ),
+      // home: MainView(),
+      home: LoginView(),
     );
   }
 }
