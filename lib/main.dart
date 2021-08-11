@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         brightness: Brightness.light,
         backgroundColor: Colors.white,
+        scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           elevation: 0.0,
           systemOverlayStyle:
