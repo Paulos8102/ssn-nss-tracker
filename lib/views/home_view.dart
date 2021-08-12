@@ -16,16 +16,15 @@ class HomeView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Current Events",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    ?.apply(color: Color.fromRGBO(101, 188, 70, 1.0)),
+                "Ongoing Events",
+                style: Theme.of(context).textTheme.headline5?.apply(
+                    color: Colors.lightGreenAccent[400], fontWeightDelta: 1),
               ),
               SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
-                  color: Color.fromRGBO(101, 188, 70, 1.0),
+                  // color: Color.fromRGBO(101, 188, 70, 1.0),
+                  color: Colors.lightGreenAccent[400],
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -36,7 +35,7 @@ class HomeView extends StatelessWidget {
                     children: [
                       Container(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
-                        height: 150,
+                        height: 230,
                         child: ListView.builder(
                             shrinkWrap: true,
                             itemCount: 6,
@@ -46,7 +45,7 @@ class HomeView extends StatelessWidget {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
-                                  width: 200,
+                                  width: 230,
                                   child: Card(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -60,41 +59,46 @@ class HomeView extends StatelessWidget {
                                                 builder: (context) =>
                                                     ExpandedView()));
                                       },
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                                topLeft: Radius.circular(20.0),
+                                                topRight:
+                                                    Radius.circular(20.0)),
+                                            child: Image.asset(
+                                              "assets/images/webinar.jpg",
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 Text(
                                                   "Title",
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .subtitle1
+                                                      .headline6
                                                       ?.apply(
                                                           fontWeightDelta: 1),
                                                 ),
-                                                IconButton(
-                                                    onPressed: () {},
-                                                    icon: Icon(Icons
-                                                        .notifications_outlined))
+                                                Text(
+                                                  "10th August 2021, 17:00",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .caption
+                                                      ?.apply(
+                                                          color:
+                                                              Colors.grey[600]),
+                                                ),
                                               ],
                                             ),
-                                            Text(
-                                              "10th August 2021, 17:00",
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .caption
-                                                  ?.apply(
-                                                      color: Colors.grey[600]),
-                                            ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),
@@ -111,13 +115,13 @@ class HomeView extends StatelessWidget {
                 "Upcoming Events",
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
-                    ?.apply(color: Colors.blue),
+                    .headline5
+                    ?.apply(color: Colors.blue, fontWeightDelta: 1),
               ),
               SizedBox(height: 10),
               Container(
                 decoration: BoxDecoration(
-                  color: Colors.blue,
+                  color: Colors.blue[400],
                   shape: BoxShape.rectangle,
                   borderRadius: BorderRadius.circular(15.0),
                 ),
@@ -156,31 +160,21 @@ class HomeView extends StatelessWidget {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(16.0),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  "Title",
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline6,
-                                                ),
-                                                Text(
-                                                  "10th August 2021, 17:00",
-                                                  style: TextStyle(
-                                                      color: Colors.grey[600]),
-                                                ),
-                                              ],
+                                            Text(
+                                              "Title",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6,
                                             ),
-                                            IconButton(
-                                                onPressed: () {},
-                                                icon: Icon(Icons
-                                                    .notifications_outlined))
+                                            Text(
+                                              "10th August 2021, 17:00",
+                                              style: TextStyle(
+                                                  color: Colors.grey[600]),
+                                            ),
                                           ],
                                         ),
                                       ),
