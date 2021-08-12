@@ -23,9 +23,17 @@ class MainView extends StatelessWidget {
                     Icons.calendar_today_outlined,
                     color: Colors.blue,
                   ),
-                  Icon(
-                    Icons.whatshot,
-                    color: Colors.red,
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.whatshot,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        "12",
+                        style: TextStyle(color: Colors.red),
+                      )
+                    ],
                   ),
                   Icon(
                     Icons.repeat,
