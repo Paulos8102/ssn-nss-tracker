@@ -27,8 +27,16 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           brightness: Brightness.light,
         ),
+        // fontFamily: "Feather",
         textTheme: TextTheme(
-          bodyText1: TextTheme().bodyText1?.apply(color: Colors.grey[400]),
+          headline6: Theme.of(context)
+              .textTheme
+              .headline6
+              ?.apply(fontFamily: "Feather"),
+          bodyText1: Theme.of(context)
+              .textTheme
+              .bodyText1
+              ?.apply(color: Colors.grey[400]),
         ),
       ),
       darkTheme: ThemeData(
