@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nss_tracker/views/login_view.dart';
@@ -59,8 +60,16 @@ class MyApp extends StatelessWidget {
         // .apply(displayColor: Colors.white, bodyColor: Colors.white),
       ),
       themeMode: ThemeMode.light,
-      // home: MainView(),
-      home: LoginView(),
+      home: FutureBuilder(
+          future: Firebase.initializeApp(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done)
+              return LoginView();
+            else
+              return Scaffold(
+                body: Center(child: CircularProgressIndicator()),
+              );
+          }),
     );
   }
 }
