@@ -12,6 +12,7 @@ class FirestoreEvents {
       DateTime dateTime = DateTime.parse(
           documentSnapshots[i].get("date_time").toDate().toString());
       events.add(Event(
+          id: documentSnapshots[i].id,
           name: documentSnapshots[i].get("name"),
           isOnline: false,
           date: dateTime,

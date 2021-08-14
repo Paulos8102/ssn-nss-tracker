@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nss_tracker/services/Events/firestore_events.dart';
-import 'package:uuid/uuid.dart';
 
 class Event {
   late String id;
@@ -12,14 +11,13 @@ class Event {
   String? meetLink;
 
   Event(
-      {required this.name,
+      {required this.id,
+      required this.name,
       required this.isOnline,
       required this.date,
       required this.description,
       this.meetLink,
-      required this.organizer}) {
-    id = Uuid().v4();
-  }
+      required this.organizer});
 }
 
 class Events extends ChangeNotifier {
