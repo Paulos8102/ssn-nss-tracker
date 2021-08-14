@@ -5,7 +5,9 @@ import 'package:nss_tracker/views/login_view.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark));
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.dark,
+  ));
   runApp(MyApp());
 }
 
@@ -23,8 +25,9 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         appBarTheme: AppBarTheme(
           elevation: 0.0,
-          systemOverlayStyle:
-              SystemUiOverlayStyle(statusBarColor: Colors.white),
+          systemOverlayStyle: SystemUiOverlayStyle(
+              statusBarColor: Colors.white,
+              statusBarIconBrightness: Brightness.dark),
           backgroundColor: Colors.white,
           brightness: Brightness.light,
         ),
@@ -59,7 +62,7 @@ class MyApp extends StatelessWidget {
         // primaryTextTheme: TextTheme()
         // .apply(displayColor: Colors.white, bodyColor: Colors.white),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: FutureBuilder(
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {

@@ -15,10 +15,9 @@ class LoginView extends StatelessWidget {
             children: [
               Text(
                 "NSS Tracker",
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4
-                    ?.apply(fontWeightDelta: 1, color: Colors.black),
+                style: Theme.of(context).textTheme.headline4?.apply(
+                    fontWeightDelta: 1,
+                    color: Theme.of(context).textTheme.headline6?.color),
               ),
               Text(
                 "Get Started and track your Progress",
