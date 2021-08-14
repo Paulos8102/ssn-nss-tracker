@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nss_tracker/model/event_model.dart';
 import 'package:nss_tracker/services/Events/firestore_events.dart';
@@ -104,11 +105,11 @@ class _HomeViewState extends State<HomeView> {
                                                       BorderRadius.circular(
                                                           20.0),
                                                   onTap: () {
-                                                    Navigator.push(
-                                                        context,
-                                                        MaterialPageRoute(
-                                                            builder: (context) =>
-                                                                ExpandedView()));
+                                                    // Navigator.push(
+                                                    //     context,
+                                                    //     MaterialPageRoute(
+                                                    //         builder: (context) =>
+                                                    //             ExpandedView()));
                                                   },
                                                   child: Column(
                                                     crossAxisAlignment:
@@ -216,7 +217,20 @@ class _HomeViewState extends State<HomeView> {
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           20.0),
-                                                  onTap: () {},
+                                                  onTap: () {
+                                                    Event event =
+                                                        Provider.of<Events>(
+                                                                context,
+                                                                listen: false)
+                                                            .events[position];
+                                                    Navigator.push(
+                                                        context,
+                                                        CupertinoPageRoute(
+                                                            builder: (context) =>
+                                                                ExpandedView(
+                                                                    event:
+                                                                        event)));
+                                                  },
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
@@ -231,10 +245,18 @@ class _HomeViewState extends State<HomeView> {
                                                                 topRight: Radius
                                                                     .circular(
                                                                         20.0)),
-                                                        child: Image.asset(
-                                                          "assets/images/webinar.jpg",
-                                                          fit: BoxFit.fill,
-                                                          // height: 200,
+                                                        child: Hero(
+                                                          tag: Provider.of<
+                                                                      Events>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .events[position]
+                                                              .id,
+                                                          child: Image.asset(
+                                                            "assets/images/webinar.jpg",
+                                                            fit: BoxFit.fill,
+                                                            // height: 200,
+                                                          ),
                                                         ),
                                                       ),
                                                       Padding(
