@@ -153,11 +153,7 @@ class _HomeViewState extends State<HomeView> {
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .caption
-                                                                  ?.apply(
-                                                                      color: Colors
-                                                                              .grey[
-                                                                          600]),
+                                                                  .caption,
                                                             ),
                                                           ],
                                                         ),
@@ -190,7 +186,7 @@ class _HomeViewState extends State<HomeView> {
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
+                                      horizontal: 8.0),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -288,10 +284,10 @@ class _HomeViewState extends State<HomeView> {
                                                                       .events[
                                                                           position]
                                                                       .date),
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      600]),
+                                                              style: Theme.of(
+                                                                      context)
+                                                                  .textTheme
+                                                                  .caption,
                                                             ),
                                                           ],
                                                         ),
