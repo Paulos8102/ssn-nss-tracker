@@ -4,13 +4,21 @@ import 'package:intl/intl.dart';
 import 'package:nss_tracker/model/event_model.dart';
 
 class ExpandedView extends StatelessWidget {
-  ExpandedView({Key? key, required this.event}) : super(key: key);
+  ExpandedView(
+      {Key? key,
+      required this.event,
+      required this.isOngoing,
+      required this.isOnline})
+      : super(key: key);
+  final bool isOngoing;
   final Event event;
+  final bool isOnline;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: NestedScrollView(
+        physics: BouncingScrollPhysics(),
         // floatHeaderSlivers: true,
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
@@ -18,16 +26,19 @@ class ExpandedView extends StatelessWidget {
             systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: Colors.transparent,
                 statusBarIconBrightness: Brightness.light),
-            backgroundColor: Colors.blue[400],
-            title: Text(
-              "UPCOMING EVENT",
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  ?.apply(color: Colors.white, fontSizeDelta: -5),
-            ),
+            backgroundColor:
+                isOngoing ? Colors.lightGreenAccent[700] : Colors.blue[400],
+            title: innerBoxIsScrolled
+                ? Text(
+                    "UPCOMING EVENT",
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        ?.apply(color: Colors.white, fontSizeDelta: -5),
+                  )
+                : null,
             floating: true,
-            snap: true,
+            // snap: true,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(
@@ -51,13 +62,14 @@ class ExpandedView extends StatelessWidget {
                   children: [
                     Text(
                       event.name,
+                      softWrap: true,
                       style: Theme.of(context).textTheme.headline5?.apply(
                           fontFamily: "Feather",
                           color: Theme.of(context).textTheme.headline6?.color,
                           fontSizeDelta: 3),
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -112,7 +124,76 @@ class ExpandedView extends StatelessWidget {
                       Text(event.description),
                     ],
                   ),
-                )
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: OutlinedButton(
+                        onPressed: () {},
+                        style: ButtonStyle(
+                            elevation: MaterialStateProperty.all<double>(5.0),
+                            overlayColor: MaterialStateProperty.all<Color>(
+                                Colors.green.shade50),
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                                RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(15.0)))),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Text(
+                                "Add to Calender".toUpperCase(),
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                    color: Colors.lightGreenAccent[700]),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                isOnline
+                                    ? "Join".toUpperCase()
+                                    : "Submit".toUpperCase(),
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.lightGreenAccent.shade700),
+                          elevation: MaterialStateProperty.all<double>(5.0),
+                          shape: MaterialStateProperty.all<OutlinedBorder>(
+                            RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15.0)),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
           ),
