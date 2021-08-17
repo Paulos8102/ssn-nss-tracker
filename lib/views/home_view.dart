@@ -232,22 +232,22 @@ class _HomeViewState extends State<HomeView> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        20.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20.0)),
-                                                        child: Hero(
-                                                          tag: Provider.of<
-                                                                      Events>(
-                                                                  context,
-                                                                  listen: false)
-                                                              .events[position]
-                                                              .id,
+                                                      Hero(
+                                                        tag: Provider.of<
+                                                                    Events>(
+                                                                context,
+                                                                listen: false)
+                                                            .events[position]
+                                                            .id,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          20.0)),
                                                           child: Image.asset(
                                                             "assets/images/webinar.jpg",
                                                             fit: BoxFit.fill,

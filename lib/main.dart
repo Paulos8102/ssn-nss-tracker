@@ -53,6 +53,10 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: TextTheme(
           bodyText1: TextTheme().bodyText1?.apply(color: Colors.grey[850]),
+          headline6: Theme.of(context)
+              .textTheme
+              .headline6
+              ?.apply(fontFamily: "Feather", color: Colors.white),
         ),
         bottomNavigationBarTheme:
             BottomNavigationBarThemeData(backgroundColor: Colors.black),
@@ -62,7 +66,7 @@ class MyApp extends StatelessWidget {
         // primaryTextTheme: TextTheme()
         // .apply(displayColor: Colors.white, bodyColor: Colors.white),
       ),
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.system,
       home: FutureBuilder(
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {
