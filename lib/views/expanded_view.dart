@@ -2,20 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nss_tracker/model/event_model.dart';
+import 'package:url_launcher/url_launcher.dart';
+// import 'package:device_calendar/device_calendar.dart' as deviceCalendar;
 
 class ExpandedView extends StatelessWidget {
-  ExpandedView(
-      {Key? key,
-      required this.event,
-      required this.isOngoing,
-      required this.isOnline})
-      : super(key: key);
+  ExpandedView({
+    Key? key,
+    required this.event,
+    required this.isOngoing,
+  }) : super(key: key);
   final bool isOngoing;
   final Event event;
-  final bool isOnline;
 
   @override
   Widget build(BuildContext context) {
+    // print(event.isOnline);
     return Scaffold(
       body: NestedScrollView(
         physics: BouncingScrollPhysics(),
@@ -30,7 +31,9 @@ class ExpandedView extends StatelessWidget {
                 isOngoing ? Colors.lightGreenAccent[700] : Colors.blue[400],
             title: innerBoxIsScrolled
                 ? Text(
-                    "UPCOMING EVENT",
+                    isOngoing
+                        ? "Ongoing Event".toUpperCase()
+                        : "Upcoming Event".toUpperCase(),
                     style: Theme.of(context)
                         .textTheme
                         .headline6
@@ -74,14 +77,17 @@ class ExpandedView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                              DateFormat("d'th' MMM, y")
-                                  .format(event.date)
+                              DateFormat("d'th' MMM, y; h:mm aa")
+                                  .format(event.startDateTime)
                                   .toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
                                   ?.apply(fontSizeDelta: -1)),
-                          Text(DateFormat("h:mm").format(event.date).toString(),
+                          Text(
+                              DateFormat("d'th' MMM, y; h:mm aa")
+                                  .format(event.endDateTime)
+                                  .toString(),
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -121,7 +127,7 @@ class ExpandedView extends StatelessWidget {
                             ?.apply(fontWeightDelta: 2),
                       ),
                       SizedBox(height: 10),
-                      Text(event.description),
+                      Text(event.instruction),
                     ],
                   ),
                 ),
@@ -130,7 +136,38 @@ class ExpandedView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: OutlinedButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          // deviceCalendar.DeviceCalendarPlugin
+                          //     _deviceCalendarPlugin =
+                          //     deviceCalendar.DeviceCalendarPlugin();
+                          // try {
+                          //   var permissionsGranted =
+                          //       await _deviceCalendarPlugin.hasPermissions();
+                          //   if (permissionsGranted.isSuccess &&
+                          //       !permissionsGranted.data) {
+                          //     permissionsGranted = await _deviceCalendarPlugin
+                          //         .requestPermissions();
+                          //     if (!permissionsGranted.isSuccess ||
+                          //         !permissionsGranted.data) {
+                          //       return;
+                          //     }
+                          //   }
+
+                          //   final cResult =
+                          //       await _deviceCalendarPlugin.retrieveCalendars();
+                          //   List<deviceCalendar.Calendar> calendars =
+                          //       cResult.data;
+                          //   final createEventResult =
+                          //       await _deviceCalendarPlugin.createOrUpdateEvent(
+                          //           deviceCalendar.Event(calendars[0].id,
+                          //               title: event.name,
+                          //               start: event.startDateTime,
+                          //               description: event.description));
+                          //   print(createEventResult.isSuccess);
+                          // } catch (e) {
+                          //   print(e);
+                          // }
+                        },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all<double>(5.0),
                             overlayColor: MaterialStateProperty.all<Color>(
@@ -160,37 +197,57 @@ class ExpandedView extends StatelessWidget {
                       ),
                     ),
                     Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: Text(
+                        event.isOnline
+                            ? "You will be able to access the button to join the meeting 5 mins before event starts, until 10 mins into the meeting"
+                            : "Fill the form and submit your entries",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            ?.apply(color: Colors.grey.shade400),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                        onPressed: () {},
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                isOnline
-                                    ? "Join".toUpperCase()
-                                    : "Submit".toUpperCase(),
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
+                          onPressed: isOngoing
+                              ? () {
+                                  // launch(event.link);
+                                  launch("https://nitsua-portfolio.web.app/");
+                                }
+                              : null,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  event.isOnline
+                                      ? "Join".toUpperCase()
+                                      : "Submit".toUpperCase(),
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20,
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.lightGreenAccent.shade700),
-                          elevation: MaterialStateProperty.all<double>(5.0),
-                          shape: MaterialStateProperty.all<OutlinedBorder>(
-                            RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0)),
+                            ],
                           ),
-                        ),
-                      ),
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                                isOngoing
+                                    ? Colors.lightGreenAccent.shade700
+                                    : Colors.grey.shade600),
+                            elevation: MaterialStateProperty.all<double>(5.0),
+                            shape: MaterialStateProperty.all<OutlinedBorder>(
+                              RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(15.0)),
+                            ),
+                          )),
                     ),
                   ],
                 ),

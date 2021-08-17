@@ -35,17 +35,23 @@ class _HomeViewState extends State<HomeView> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: FirestoreEvents.getFirestoreEvents(),
+        future: fetchEvents(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            List<Event> events = snapshot.data as List<Event>;
+            Map<String, List<Event>> events =
+                snapshot.data as Map<String, List<Event>>;
+            List<Event> ongoingEvents = events["ongoing_events"] as List<Event>;
+            List<Event> upcomingEvents =
+                events["upcoming_events"] as List<Event>;
             return ChangeNotifierProvider(
-                create: (context) => Events(events: events),
+                create: (context) => Events(
+                    ongoingEvents: ongoingEvents,
+                    upcomingEvents: upcomingEvents),
                 builder: (context, _) {
                   return RefreshIndicator(
                     onRefresh: () async {
                       await Provider.of<Events>(context, listen: false)
-                          .fetchEvents();
+                          .updateEvents();
                     },
                     child: SingleChildScrollView(
                       physics: BouncingScrollPhysics(),
@@ -79,7 +85,9 @@ class _HomeViewState extends State<HomeView> {
                                     height: 220,
                                     child: PageView.builder(
                                         controller: _controller,
-                                        itemCount: 6,
+                                        itemCount: Provider.of<Events>(context)
+                                            .ongoingEvents
+                                            .length,
                                         // onPageChanged: (index) {
                                         //   setState(
                                         //       () => _currentOngoingPageIndex = index);
@@ -105,28 +113,46 @@ class _HomeViewState extends State<HomeView> {
                                                       BorderRadius.circular(
                                                           20.0),
                                                   onTap: () {
-                                                    // Navigator.push(
-                                                    //     context,
-                                                    //     MaterialPageRoute(
-                                                    //         builder: (context) =>
-                                                    //             ExpandedView()));
+                                                    Event event = Provider.of<
+                                                                    Events>(
+                                                                context,
+                                                                listen: false)
+                                                            .ongoingEvents[
+                                                        position];
+                                                    Navigator.push(
+                                                        context,
+                                                        CupertinoPageRoute(
+                                                            builder: (context) =>
+                                                                ExpandedView(
+                                                                    isOngoing:
+                                                                        true,
+                                                                    event:
+                                                                        event)));
                                                   },
                                                   child: Column(
                                                     crossAxisAlignment:
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      ClipRRect(
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        20.0),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20.0)),
-                                                        child: Image.asset(
-                                                          "assets/images/webinar.jpg",
+                                                      Hero(
+                                                        tag:
+                                                            Provider.of<Events>(
+                                                                    context)
+                                                                .ongoingEvents[
+                                                                    position]
+                                                                .id,
+                                                        child: ClipRRect(
+                                                          borderRadius:
+                                                              BorderRadius.only(
+                                                                  topLeft: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                  topRight: Radius
+                                                                      .circular(
+                                                                          20.0)),
+                                                          child: Image.asset(
+                                                            "assets/images/webinar.jpg",
+                                                          ),
                                                         ),
                                                       ),
                                                       Padding(
@@ -139,7 +165,14 @@ class _HomeViewState extends State<HomeView> {
                                                                   .start,
                                                           children: [
                                                             Text(
-                                                              "Title",
+                                                              Provider.of<Events>(
+                                                                      context)
+                                                                  .ongoingEvents[
+                                                                      position]
+                                                                  .name,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
@@ -149,7 +182,12 @@ class _HomeViewState extends State<HomeView> {
                                                                           1),
                                                             ),
                                                             Text(
-                                                              "10th August 2021, 17:00",
+                                                              DateFormat("MMMM d'th' y, hh:mm").format(Provider
+                                                                      .of<Events>(
+                                                                          context)
+                                                                  .ongoingEvents[
+                                                                      position]
+                                                                  .startDateTime),
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
@@ -198,7 +236,7 @@ class _HomeViewState extends State<HomeView> {
                                               NeverScrollableScrollPhysics(),
                                           itemCount:
                                               Provider.of<Events>(context)
-                                                  .events
+                                                  .upcomingEvents
                                                   .length,
                                           itemBuilder: (context, position) {
                                             return Padding(
@@ -214,18 +252,17 @@ class _HomeViewState extends State<HomeView> {
                                                       BorderRadius.circular(
                                                           20.0),
                                                   onTap: () {
-                                                    Event event =
-                                                        Provider.of<Events>(
+                                                    Event event = Provider.of<
+                                                                    Events>(
                                                                 context,
                                                                 listen: false)
-                                                            .events[position];
+                                                            .upcomingEvents[
+                                                        position];
                                                     Navigator.push(
                                                         context,
                                                         CupertinoPageRoute(
                                                             builder: (context) =>
                                                                 ExpandedView(
-                                                                    isOnline:
-                                                                        false,
                                                                     isOngoing:
                                                                         false,
                                                                     event:
@@ -236,27 +273,19 @@ class _HomeViewState extends State<HomeView> {
                                                         CrossAxisAlignment
                                                             .start,
                                                     children: [
-                                                      Hero(
-                                                        tag: Provider.of<
-                                                                    Events>(
-                                                                context,
-                                                                listen: false)
-                                                            .events[position]
-                                                            .id,
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          20.0)),
-                                                          child: Image.asset(
-                                                            "assets/images/webinar.jpg",
-                                                            fit: BoxFit.fill,
-                                                            // height: 200,
-                                                          ),
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius.only(
+                                                                topLeft: Radius
+                                                                    .circular(
+                                                                        20.0),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        20.0)),
+                                                        child: Image.asset(
+                                                          "assets/images/webinar.jpg",
+                                                          fit: BoxFit.fill,
+                                                          // height: 200,
                                                         ),
                                                       ),
                                                       Padding(
@@ -271,23 +300,24 @@ class _HomeViewState extends State<HomeView> {
                                                             Text(
                                                               Provider.of<Events>(
                                                                       context)
-                                                                  .events[
+                                                                  .upcomingEvents[
                                                                       position]
                                                                   .name,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
                                                                   .headline6,
                                                             ),
                                                             Text(
-                                                              DateFormat(
-                                                                      "MMMM d'th' y, hh:mm")
-                                                                  .format(Provider.of<
-                                                                              Events>(
+                                                              DateFormat("MMMM d'th' y, hh:mm").format(Provider
+                                                                      .of<Events>(
                                                                           context)
-                                                                      .events[
-                                                                          position]
-                                                                      .date),
+                                                                  .upcomingEvents[
+                                                                      position]
+                                                                  .startDateTime),
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme

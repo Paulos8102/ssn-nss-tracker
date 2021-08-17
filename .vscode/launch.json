@@ -9,14 +9,17 @@
             "type": "dart",
             "request": "launch",
             "flutterMode": "debug",
-            "program": "lib/main.dart"
+            "program": "lib/main.dart",
+            "args": [
+                "--no-sound-null-safety"
+            ],
         },
         {
             "name": "Flutter Release",
             "type": "dart",
             "request": "launch",
             "flutterMode": "release",
-            "program": "lib/main.dart"
+            "program": "lib/main.dart",
         },
         {
             "name": "Flutter Profile",

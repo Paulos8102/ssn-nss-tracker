@@ -4,29 +4,37 @@ import 'package:nss_tracker/services/Events/firestore_events.dart';
 class Event {
   late String id;
   String name;
-  DateTime date;
+  DateTime startDateTime;
+  String link;
   String organizer;
   String description;
+  String instruction;
   bool isOnline;
-  String? meetLink;
+  DateTime endDateTime;
 
   Event(
       {required this.id,
+      required this.instruction,
       required this.name,
       required this.isOnline,
-      required this.date,
+      required this.startDateTime,
+      required this.endDateTime,
       required this.description,
-      this.meetLink,
+      required this.link,
       required this.organizer});
 }
 
 class Events extends ChangeNotifier {
-  List<Event> events = [];
+  List<Event> ongoingEvents = [];
+  List<Event> upcomingEvents = [];
 
-  Events({required this.events});
+  Events({required this.ongoingEvents, required this.upcomingEvents});
 
-  Future<void> fetchEvents() async {
-    events = await FirestoreEvents.getFirestoreEvents();
+  Future<void> updateEvents() async {
+    Map<String, List<Event>> events = Map();
+    events = await fetchEvents();
+    ongoingEvents = events["ongoing_events"] as List<Event>;
+    upcomingEvents = events["upcoming_events"] as List<Event>;
     notifyListeners();
   }
 }
