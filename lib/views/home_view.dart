@@ -224,10 +224,6 @@ class _HomeViewState extends State<HomeView> {
                                                         CupertinoPageRoute(
                                                             builder: (context) =>
                                                                 ExpandedView(
-                                                                    isOnline:
-                                                                        false,
-                                                                    isOngoing:
-                                                                        false,
                                                                     event:
                                                                         event)));
                                                   },
