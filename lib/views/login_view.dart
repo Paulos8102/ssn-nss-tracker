@@ -27,29 +27,37 @@ class LoginView extends StatelessWidget {
                     .headline5
                     ?.apply(fontWeightDelta: 1),
               ),
-              MaterialButton(
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0)),
-                color: Color.fromRGBO(101, 188, 70, 1.0),
+              TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(context,
                       MaterialPageRoute(builder: (context) => MainView()));
                 },
                 child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Text(
-                        "SIGN IN",
-                        style: TextStyle(color: Colors.white, fontSize: 20.0),
+                        "Sign In".toUpperCase(),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ],
                 ),
-              )
+                style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.lightGreenAccent.shade700),
+                  elevation: MaterialStateProperty.all<double>(5.0),
+                  shape: MaterialStateProperty.all<OutlinedBorder>(
+                    RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0)),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
