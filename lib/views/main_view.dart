@@ -14,6 +14,7 @@ class MainView extends StatelessWidget {
           return [
             SliverAppBar(
               // pinned: true,
+              snap: true,
               forceElevated: innerBoxIsScrolled,
               floating: true,
               title: Row(
