@@ -1,9 +1,9 @@
+import 'package:add_2_calendar/add_2_calendar.dart' as add2Cal;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nss_tracker/model/event_model.dart';
 import 'package:url_launcher/url_launcher.dart';
-// import 'package:device_calendar/device_calendar.dart' as deviceCalendar;
 
 class ExpandedView extends StatelessWidget {
   ExpandedView({
@@ -137,36 +137,13 @@ class ExpandedView extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: OutlinedButton(
                         onPressed: () async {
-                          // deviceCalendar.DeviceCalendarPlugin
-                          //     _deviceCalendarPlugin =
-                          //     deviceCalendar.DeviceCalendarPlugin();
-                          // try {
-                          //   var permissionsGranted =
-                          //       await _deviceCalendarPlugin.hasPermissions();
-                          //   if (permissionsGranted.isSuccess &&
-                          //       !permissionsGranted.data) {
-                          //     permissionsGranted = await _deviceCalendarPlugin
-                          //         .requestPermissions();
-                          //     if (!permissionsGranted.isSuccess ||
-                          //         !permissionsGranted.data) {
-                          //       return;
-                          //     }
-                          //   }
-
-                          //   final cResult =
-                          //       await _deviceCalendarPlugin.retrieveCalendars();
-                          //   List<deviceCalendar.Calendar> calendars =
-                          //       cResult.data;
-                          //   final createEventResult =
-                          //       await _deviceCalendarPlugin.createOrUpdateEvent(
-                          //           deviceCalendar.Event(calendars[0].id,
-                          //               title: event.name,
-                          //               start: event.startDateTime,
-                          //               description: event.description));
-                          //   print(createEventResult.isSuccess);
-                          // } catch (e) {
-                          //   print(e);
-                          // }
+                          final event = add2Cal.Event(
+                            title: this.event.name,
+                            startDate: this.event.startDateTime,
+                            endDate: this.event.endDateTime,
+                            description: this.event.description,
+                          );
+                          add2Cal.Add2Calendar.addEvent2Cal(event);
                         },
                         style: ButtonStyle(
                             elevation: MaterialStateProperty.all<double>(5.0),
