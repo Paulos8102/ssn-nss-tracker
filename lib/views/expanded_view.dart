@@ -213,7 +213,11 @@ class ExpandedView extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextButton(
-                          onPressed: isOngoing
+                          onPressed: isOngoing &&
+                                  DateTime.now().isBefore(event.startDateTime
+                                      .add(Duration(minutes: 10))) &&
+                                  DateTime.now().isAfter(event.startDateTime
+                                      .subtract(Duration(minutes: 5)))
                               ? () {
                                   // launch(event.link);
                                   launch("https://nitsua-portfolio.web.app/");
@@ -239,7 +243,11 @@ class ExpandedView extends StatelessWidget {
                           ),
                           style: ButtonStyle(
                             backgroundColor: MaterialStateProperty.all<Color>(
-                                isOngoing
+                                DateTime.now().isBefore(event.startDateTime
+                                            .add(Duration(minutes: 10))) &&
+                                        DateTime.now().isAfter(event
+                                            .startDateTime
+                                            .subtract(Duration(minutes: 5)))
                                     ? Colors.lightGreenAccent.shade700
                                     : Colors.grey.shade600),
                             elevation: MaterialStateProperty.all<double>(5.0),
