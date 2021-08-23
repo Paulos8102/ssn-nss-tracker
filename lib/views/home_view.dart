@@ -121,7 +121,7 @@ class _HomeViewState extends State<HomeView> {
                                                         position];
                                                     Navigator.push(
                                                         context,
-                                                        CupertinoPageRoute(
+                                                        MaterialPageRoute(
                                                             builder: (context) =>
                                                                 ExpandedView(
                                                                     isOngoing:
@@ -150,8 +150,27 @@ class _HomeViewState extends State<HomeView> {
                                                                   topRight: Radius
                                                                       .circular(
                                                                           20.0)),
-                                                          child: Image.asset(
-                                                            "assets/images/webinar.jpg",
+                                                          child: Container(
+                                                            width:
+                                                                MediaQuery.of(
+                                                                        context)
+                                                                    .size
+                                                                    .width,
+                                                            height: 140,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              image:
+                                                                  DecorationImage(
+                                                                fit:
+                                                                    BoxFit.fill,
+                                                                image:
+                                                                    AssetImage(
+                                                                  "assets/images/webinar.jpg",
+
+                                                                  // height: 200,
+                                                                ),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
@@ -282,10 +301,24 @@ class _HomeViewState extends State<HomeView> {
                                                                 topRight: Radius
                                                                     .circular(
                                                                         20.0)),
-                                                        child: Image.asset(
-                                                          "assets/images/webinar.jpg",
-                                                          fit: BoxFit.fill,
-                                                          // height: 200,
+                                                        child: Container(
+                                                          width: MediaQuery.of(
+                                                                  context)
+                                                              .size
+                                                              .width,
+                                                          height: 190,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.fill,
+                                                              image: AssetImage(
+                                                                "assets/images/plant.jpg",
+
+                                                                // height: 200,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
                                                       ),
                                                       Padding(
