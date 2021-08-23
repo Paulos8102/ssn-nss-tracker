@@ -47,7 +47,9 @@ class ExpandedView extends StatelessWidget {
               background: Hero(
                 tag: event.id,
                 child: Image.asset(
-                  "assets/images/webinar.jpg",
+                  isOngoing
+                      ? "assets/images/plant.jpg"
+                      : "assets/images/webinar.jpg",
                   fit: BoxFit.fitWidth,
                 ),
               ),
