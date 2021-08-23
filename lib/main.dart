@@ -1,13 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nss_tracker/services/firebase/firebase.dart';
 import 'package:nss_tracker/views/login_view.dart';
+import 'package:nss_tracker/views/main_view.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.dark,
+    //   statusBarIconBrightness: Brightness.dark,
   ));
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(MyApp());
@@ -73,9 +76,18 @@ class MyApp extends StatelessWidget {
       home: FutureBuilder(
           future: Firebase.initializeApp(),
           builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done)
-              return LoginView();
-            else
+            if (snapshot.connectionState == ConnectionState.done) {
+              return StreamBuilder(
+                  stream: firebaseAuthServices.isSignedIn(),
+                  builder: (context, snapshot) {
+                    final User? user = snapshot.data as User?;
+                    if (user == null) {
+                      return LoginView();
+                    } else {
+                      return MainView();
+                    }
+                  });
+            } else
               return Scaffold(
                 body: Center(child: CircularProgressIndicator()),
               );

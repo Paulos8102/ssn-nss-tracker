@@ -5,7 +5,7 @@ import 'package:nss_tracker/services/firebase/firebase.dart';
 class FirestoreEvents {
   static Future<List<Event>> getFirestoreEvents(String collectionName) async {
     List<Event> events = [];
-    QuerySnapshot<Map<String, dynamic>> snapshot = await firebaseServices
+    QuerySnapshot<Map<String, dynamic>> snapshot = await firestoreServices
         .getFirestoreCollection(collectionName: collectionName);
     List<QueryDocumentSnapshot> documentSnapshots = snapshot.docs;
     for (int i = 0; i < documentSnapshots.length; i++) {

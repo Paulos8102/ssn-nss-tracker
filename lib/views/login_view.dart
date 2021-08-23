@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nss_tracker/services/firebase/firebase.dart';
 import 'package:nss_tracker/views/main_view.dart';
 
 class LoginView extends StatelessWidget {
@@ -28,9 +29,25 @@ class LoginView extends StatelessWidget {
                     ?.apply(fontWeightDelta: 1),
               ),
               TextButton(
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => MainView()));
+                onPressed: () async {
+                  try {
+                    await firebaseAuthServices.signInWithGoogle();
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => MainView()));
+                  } catch (e) {
+                    showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                              title: Text("Error while Sign In"),
+                              content: Text(
+                                  "Looks like the sign in flow encountered some issue, please try again"),
+                              actions: [
+                                OutlinedButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: Text("Ok"))
+                              ],
+                            ));
+                  }
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
