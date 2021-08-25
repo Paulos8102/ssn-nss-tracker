@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
                                   child: Container(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.0),
-                                    height: 200,
+                                    height: 210,
                                     child: PageView.builder(
                                         controller: _controller,
                                         itemCount: Provider.of<Events>(context)
