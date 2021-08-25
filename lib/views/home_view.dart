@@ -82,7 +82,7 @@ class _HomeViewState extends State<HomeView> {
                                   child: Container(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 8.0),
-                                    height: 220,
+                                    height: 200,
                                     child: PageView.builder(
                                         controller: _controller,
                                         itemCount: Provider.of<Events>(context)
@@ -156,13 +156,13 @@ class _HomeViewState extends State<HomeView> {
                                                                         context)
                                                                     .size
                                                                     .width,
-                                                            height: 140,
+                                                            height: 120,
                                                             decoration:
                                                                 BoxDecoration(
                                                               image:
                                                                   DecorationImage(
-                                                                fit:
-                                                                    BoxFit.fill,
+                                                                fit: BoxFit
+                                                                    .fitWidth,
                                                                 image:
                                                                     AssetImage(
                                                                   "assets/images/webinar.jpg",
@@ -260,7 +260,9 @@ class _HomeViewState extends State<HomeView> {
                                           itemBuilder: (context, position) {
                                             return Padding(
                                               padding:
-                                                  const EdgeInsets.all(10.0),
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 16.0,
+                                                      vertical: 8.0),
                                               child: Card(
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
@@ -306,12 +308,13 @@ class _HomeViewState extends State<HomeView> {
                                                                   context)
                                                               .size
                                                               .width,
-                                                          height: 190,
+                                                          height: 150,
                                                           decoration:
                                                               BoxDecoration(
                                                             image:
                                                                 DecorationImage(
-                                                              fit: BoxFit.fill,
+                                                              fit: BoxFit
+                                                                  .fitWidth,
                                                               image: AssetImage(
                                                                 "assets/images/plant.jpg",
 
@@ -339,6 +342,7 @@ class _HomeViewState extends State<HomeView> {
                                                               overflow:
                                                                   TextOverflow
                                                                       .ellipsis,
+                                                              maxLines: 2,
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme

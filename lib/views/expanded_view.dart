@@ -84,7 +84,7 @@ class ExpandedView extends StatelessWidget {
                                   .toString(),
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .caption
                                   ?.apply(fontSizeDelta: -1)),
                           Text(
                               DateFormat("d'th' MMM, y; h:mm aa")
@@ -92,7 +92,7 @@ class ExpandedView extends StatelessWidget {
                                   .toString(),
                               style: Theme.of(context)
                                   .textTheme
-                                  .subtitle2
+                                  .caption
                                   ?.apply(fontSizeDelta: -1)),
                         ],
                       ),
