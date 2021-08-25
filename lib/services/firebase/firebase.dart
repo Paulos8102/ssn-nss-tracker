@@ -23,7 +23,7 @@ class FirebaseAuthServices {
     try {
       final _googleUserAccount = await _googleUser.signIn();
       final GoogleSignInAuthentication googleAuth =
-          await _googleUserAccount.authentication;
+          await _googleUserAccount!.authentication;
 
       final OAuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
