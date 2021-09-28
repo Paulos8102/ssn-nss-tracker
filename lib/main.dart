@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:nss_tracker/model/user_model.dart' as userModel;
 import 'package:nss_tracker/services/firebase/firebase.dart';
 import 'package:nss_tracker/views/login_view.dart';
 import 'package:nss_tracker/views/main_view.dart';
@@ -34,7 +35,6 @@ class MyApp extends StatelessWidget {
               statusBarColor: Colors.white,
               statusBarIconBrightness: Brightness.dark),
           backgroundColor: Colors.white,
-          brightness: Brightness.light,
         ),
         // fontFamily: "Feather",
         textTheme: TextTheme(
@@ -55,7 +55,6 @@ class MyApp extends StatelessWidget {
           systemOverlayStyle:
               SystemUiOverlayStyle(statusBarColor: Colors.black),
           backgroundColor: Colors.black,
-          brightness: Brightness.dark,
         ),
         textTheme: TextTheme(
           bodyText1: TextTheme().bodyText1?.apply(color: Colors.grey[850]),
@@ -84,7 +83,20 @@ class MyApp extends StatelessWidget {
                     if (user == null) {
                       return LoginView();
                     } else {
-                      return MainView();
+                      return FutureBuilder(
+                        future: firebaseAuthServices.getUserModel(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.done) {
+                            final user = snapshot.data as userModel.User;
+                            return MainView(user: user);
+                          } else {
+                            return Scaffold(
+                                body:
+                                    Center(child: CircularProgressIndicator()));
+                          }
+                        },
+                      );
                     }
                   });
             } else

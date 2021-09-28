@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:nss_tracker/model/user_model.dart';
 import 'package:nss_tracker/views/home_view.dart';
 
 class MainView extends StatelessWidget {
-  MainView({Key? key}) : super(key: key);
+  late final User user;
+  MainView({Key? key, required User user}) : super(key: key);
   final List<Widget> views = <Widget>[HomeView()];
 
   @override
@@ -47,20 +49,24 @@ class MainView extends StatelessWidget {
         },
         body: views[0],
       ),
-      // bottomNavigationBar: BottomNavigationBar(
-      //   showSelectedLabels: false,
-      //   showUnselectedLabels: false,
-      //   elevation: 20.0,
-      //   items: [
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.settings), label: "Placeholder"),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.settings), label: "Placeholder"),
-      //     BottomNavigationBarItem(
-      //         icon: Icon(Icons.settings), label: "Placeholder"),
-      //     // BottomNavigationBarItem(
-      //     // icon: Icon(Icons.settings), label: "Placeholder"),
-      //   ],
+      // bottomNavigationBar: ClipRRect(
+      //   borderRadius: BorderRadius.circular(20.0),
+      //   child: BottomNavigationBar(
+
+      //     showSelectedLabels: false,
+      //     showUnselectedLabels: false,
+      //     elevation: 20.0,
+      //     items: [
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.settings), label: "Placeholder"),
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.settings), label: "Placeholder"),
+      //       BottomNavigationBarItem(
+      //           icon: Icon(Icons.settings), label: "Placeholder"),
+      //       // BottomNavigationBarItem(
+      //       // icon: Icon(Icons.settings), label: "Placeholder"),
+      // ],
+      // ),
       // ),
     );
   }

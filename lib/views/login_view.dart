@@ -3,7 +3,9 @@ import 'package:nss_tracker/services/firebase/firebase.dart';
 import 'package:nss_tracker/views/main_view.dart';
 
 class LoginView extends StatelessWidget {
-  const LoginView({Key? key}) : super(key: key);
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  LoginView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +30,22 @@ class LoginView extends StatelessWidget {
                     .headline5
                     ?.apply(fontWeightDelta: 1),
               ),
+              TextField(
+                controller: _emailController,
+              ),
+              TextField(
+                controller: _passwordController,
+              ),
               TextButton(
                 onPressed: () async {
                   try {
-                    await firebaseAuthServices.signInWithGoogle();
-                    Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => MainView()));
+                    final user = await firebaseAuthServices.signIn(
+                        _emailController.text.trim(),
+                        _passwordController.text.trim());
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => MainView(user: user)));
                   } catch (e) {
                     showDialog(
                         context: context,
