@@ -15,6 +15,16 @@ class FirestoreServices {
       {required String collectioName, required String documentID}) async {
     return _firestore.collection(collectioName).doc(documentID).get();
   }
+
+  Future<void> updateFirestoreDocument(
+      {required String collectionName,
+      required String documentID,
+      required Map<String, dynamic> data}) async {
+    await _firestore
+        .collection(collectionName)
+        .doc(documentID)
+        .set(data, SetOptions(merge: true));
+  }
 }
 
 class FirebaseAuthServices {
@@ -25,20 +35,19 @@ class FirebaseAuthServices {
     return _firebaseAuth.userChanges();
   }
 
-  Future<userModel.User> getUserModel() async {
+  Future<userModel.UserModel> getUserModel() async {
     final docSnapshot = await firestoreServices.getFirestoreDocument(
         collectioName: "users", documentID: _firebaseAuth.currentUser!.uid);
-    return userModel.User(
+    return userModel.UserModel(
         uid: _firebaseAuth.currentUser!.uid,
         displayName: docSnapshot["name"],
         attendance: docSnapshot["attendance"],
         email: docSnapshot["email"],
         longestStreak: docSnapshot["longest_streaks"],
-        photoURL: docSnapshot["photo_url"],
         streak: docSnapshot["streaks"]);
   }
 
-  Future<userModel.User> signIn(String email, String password) async {
+  Future<userModel.UserModel> signIn(String email, String password) async {
     try {
       await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);

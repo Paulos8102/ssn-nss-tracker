@@ -6,6 +6,7 @@ import 'package:nss_tracker/model/user_model.dart' as userModel;
 import 'package:nss_tracker/services/firebase/firebase.dart';
 import 'package:nss_tracker/views/login_view.dart';
 import 'package:nss_tracker/views/main_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -88,8 +89,12 @@ class MyApp extends StatelessWidget {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.done) {
-                            final user = snapshot.data as userModel.User;
-                            return MainView(user: user);
+                            final user = snapshot.data as userModel.UserModel;
+                            return ChangeNotifierProvider.value(
+                                value: user,
+                                builder: (context, _) {
+                                  return MainView();
+                                });
                           } else {
                             return Scaffold(
                                 body:

@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:nss_tracker/model/event_model.dart';
+import 'package:nss_tracker/model/user_model.dart';
+import 'package:nss_tracker/services/Events/firestore_events.dart';
+import 'package:nss_tracker/services/firebase/firebase.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExpandedView extends StatelessWidget {
@@ -199,7 +203,21 @@ class ExpandedView extends StatelessWidget {
                                       .subtract(Duration(minutes: 5)))
                               ? () {
                                   // launch(event.link);
-                                  launch("https://nitsua-portfolio.web.app/");
+                                  final newAttendace = Provider.of<UserModel>(
+                                              context,
+                                              listen: false)
+                                          .attendance +
+                                      event.endDateTime
+                                          .difference(event.startDateTime)
+                                          .inHours;
+                                  print(newAttendace);
+                                  FirestoreEvents.updateAttendance(
+                                      Provider.of<UserModel>(context,
+                                              listen: false)
+                                          .uid,
+                                      newAttendace);
+
+                                  launch(event.link);
                                 }
                               : null,
                           child: Row(

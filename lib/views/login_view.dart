@@ -42,10 +42,8 @@ class LoginView extends StatelessWidget {
                     final user = await firebaseAuthServices.signIn(
                         _emailController.text.trim(),
                         _passwordController.text.trim());
-                    Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => MainView(user: user)));
+                    Navigator.pushReplacement(context,
+                        MaterialPageRoute(builder: (context) => MainView()));
                   } catch (e) {
                     showDialog(
                         context: context,

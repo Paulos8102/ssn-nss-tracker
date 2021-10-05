@@ -6,6 +6,7 @@ class Event {
   String name;
   DateTime startDateTime;
   String link;
+  // String code;
   String organizer;
   String description;
   String instruction;
@@ -16,6 +17,7 @@ class Event {
       {required this.id,
       required this.instruction,
       required this.name,
+      // required this.code,
       required this.isOnline,
       required this.startDateTime,
       required this.endDateTime,

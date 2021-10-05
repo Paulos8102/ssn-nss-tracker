@@ -1,13 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nss_tracker/model/event_model.dart';
+import 'package:nss_tracker/model/user_model.dart';
 import 'package:nss_tracker/services/Events/firestore_events.dart';
 import 'package:nss_tracker/views/expanded_view.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  final UserModel userModel;
+  const HomeView({Key? key, required this.userModel}) : super(key: key);
 
   @override
   _HomeViewState createState() => _HomeViewState();
@@ -123,11 +125,17 @@ class _HomeViewState extends State<HomeView> {
                                                         context,
                                                         MaterialPageRoute(
                                                             builder: (context) =>
-                                                                ExpandedView(
-                                                                    isOngoing:
-                                                                        true,
-                                                                    event:
-                                                                        event)));
+                                                                ChangeNotifierProvider
+                                                                    .value(
+                                                                        value: widget
+                                                                            .userModel,
+                                                                        builder:
+                                                                            (context,
+                                                                                _) {
+                                                                          return ExpandedView(
+                                                                              isOngoing: true,
+                                                                              event: event);
+                                                                        })));
                                                   },
                                                   child: Column(
                                                     crossAxisAlignment:

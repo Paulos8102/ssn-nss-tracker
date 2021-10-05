@@ -14,6 +14,7 @@ class FirestoreEvents {
       DateTime endDateTime = DateTime.parse(
           documentSnapshots[i].get("end_date_time").toDate().toString());
       events.add(Event(
+          // code: documentSnapshots[i].get("code"),
           id: documentSnapshots[i].id,
           endDateTime: endDateTime,
           instruction: documentSnapshots[i].get("instruction"),
@@ -26,6 +27,13 @@ class FirestoreEvents {
     }
 
     return events;
+  }
+
+  static Future<void> updateAttendance(String userId, int newAttendance) async {
+    firestoreServices.updateFirestoreDocument(
+        collectionName: "users",
+        documentID: userId,
+        data: {'attendance': newAttendance});
   }
 }
 

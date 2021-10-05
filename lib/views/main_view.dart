@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:nss_tracker/model/user_model.dart';
 import 'package:nss_tracker/views/home_view.dart';
+import 'package:provider/provider.dart';
 
 class MainView extends StatelessWidget {
-  late final User user;
-  MainView({Key? key, required User user}) : super(key: key);
-  final List<Widget> views = <Widget>[HomeView()];
+  MainView({Key? key}) : super(key: key);
+  // final List<Widget> views = <Widget>[];
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,12 @@ class MainView extends StatelessWidget {
                       )
                     ],
                   ),
-                  Icon(
-                    Icons.repeat,
+                  IconButton(
+                    onPressed: () {
+                      // Navigator.push(context,
+                      //     MaterialPageRoute(builder: (_) => UserView()));
+                    },
+                    icon: Icon(Icons.account_circle_outlined),
                     color: Colors.green,
                   ),
                 ],
@@ -47,7 +51,7 @@ class MainView extends StatelessWidget {
             ),
           ];
         },
-        body: views[0],
+        body: HomeView(userModel: Provider.of<UserModel>(context)),
       ),
       // bottomNavigationBar: ClipRRect(
       //   borderRadius: BorderRadius.circular(20.0),
